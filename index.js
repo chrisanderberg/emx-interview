@@ -73,7 +73,7 @@ function solvePuzzle(d) {
         }
       }
     }
-    return ` ABCD\nA${solution[0].join()}\nB${solution[1].join()}\nC${solution[2].join()}\nD${solution[3].join()}`;
+    return ` ABCD\nA${solution[0].join('')}\nB${solution[1].join('')}\nC${solution[2].join('')}\nD${solution[3].join('')}`;
   } else {
     return "couldn't parse puzzle";
   }
