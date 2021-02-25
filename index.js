@@ -45,10 +45,9 @@ function generateAnswer(req) {
       response = "yes";
       break;
     case "ping":
+    default:
       response = "OK";
       break;
-    default:
-      response = "";
   }
   return response;
 }
