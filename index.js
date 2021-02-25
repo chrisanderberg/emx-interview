@@ -55,8 +55,24 @@ function generateAnswer(req) {
 function solvePuzzle(d) {
   let puzzleMatch = d.match(/\sABCD\sA([<>=-]{4})\sB([<>=-]{4})\sC([<>=-]{4})\sD([<>=-]{4})/);
   if(puzzleMatch) {
-    let [puzzleString, compareA, compareB, compareC, compareD] = puzzleMatch;
-    return ` ABCD\n${compareA}\nB${compareB}\nC${compareC}\nD${compareD}`;
+    let [puzzleString, ...solution] = puzzleMatch;
+    let isSolved = false;
+    while(!isSolved) {
+      isSolved = true; // assume it's solved until a blank is found
+      for(let row = 0; row < 4; row++) { // each row
+        for(let col = 0; col < 4; col++) { // each col
+          if(solution[row][col] === '-') { // if it's blank
+            if(solution[col][row] !== '-') { // if the correlated element isn't blank
+              // set the element to the opposite of it's correlated element
+              solution[row][col] = solution[col][row] === '>' ? '<' : '>';
+            } else {
+              //isSolved = false;
+            }
+          }
+        }
+      }
+    }
+    return ` ABCD\n${solution[0]}\nB${solution[1]}\nC${solution[2]}\nD${solution[3]}`;
   } else {
     return "couldn't parse puzzle";
   }
