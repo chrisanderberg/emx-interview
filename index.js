@@ -8,5 +8,6 @@ express()
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 function generateAnswer(req, res) {
-  return "OK";
+  let {q, d} = req.query;
+  return `Question is :${q}\nDescription is "${d}`;
 }
