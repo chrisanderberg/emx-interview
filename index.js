@@ -53,21 +53,25 @@ function generateAnswer(req) {
 }
 
 function solvePuzzle(d) {
+  // Parse the puzzle description from the "d" query parameter.
   let puzzleMatch = d.match(/\sABCD\sA([<>=-]{4})\sB([<>=-]{4})\sC([<>=-]{4})\sD([<>=-]{4})/);
   if(puzzleMatch) {
+    // Build the puzzle constraints from the regex match.
     let [puzzleString, ...constraints] = puzzleMatch;
     constraints = constraints.map(str => str.split(''));
+
+    // There are 24 possible ways to order four letters.
     let possibleOrderings = [
       "ABCD", "ABDC", "ACBD", "ACDB", "ADBC", "ADCB",
       "BACD", "BADC", "BCAD", "BCDA", "BDAC", "BDCA",
       "CABD", "CADB", "CBAD", "CBDA", "CDAB", "CDBA",
       "DABC", "DACB", "DBAC", "DBCA", "DCAB", "DCBA"];
     
-    //let s = constraints;
-    //return ` ABCD\nA${s[0].join('')}\nB${s[1].join('')}\nC${s[2].join('')}\nD${s[3].join('')}`;
-    
+    // Brute force method, check each of the 24 possible solutions.
     for(let i = 0; i < possibleOrderings.length; i++) {
       let possibleSolution = solutionFromOrdering(possibleOrderings[i]);
+
+      // A solution that is consistent with the puzzle constraints is correct.
       if(solutionsAreConsitent(constraints, possibleSolution)) {
         let s = possibleSolution;
         return ` ABCD\nA${s[0].join('')}\nB${s[1].join('')}\nC${s[2].join('')}\nD${s[3].join('')}`;
@@ -78,16 +82,17 @@ function solvePuzzle(d) {
   }
 }
 
-// this function must take a string of length four with exactly one 'A', 'B', 'C', and 'D' each.
+// This function must take a string of length four with exactly one 'A', 'B', 'C', and 'D' each.
+// It uses the ordered letters to generate the corresponding solution to the puzzle.
 function solutionFromOrdering(abcdStr) {
-  // setup the order array
+  // Setup the order array.
   let indices = {A: 0, B: 1, C: 2, D: 3};
   let order = [undefined, undefined, undefined, undefined];
   for(let i = 0; i < 4; i++) {
     order[indices[abcdStr[i]]] = i;
   }
 
-  // build the solution
+  // Build the solution.
   let solution = [
     ['', '', '', ''],
     ['', '', '', ''],
@@ -95,6 +100,7 @@ function solutionFromOrdering(abcdStr) {
     ['', '', '', '']];
   for(let row = 0; row < 4; row++) {
     for(let col = 0; col < 4; col++) {
+      // Use the ordering to determint the correct character to use.
       let char = '';
       if(order[row] < order[col]) {
         char = '<';
@@ -110,12 +116,18 @@ function solutionFromOrdering(abcdStr) {
   return solution;
 }
 
+// Check if two potentially partial solutions (with the blank char) are
+// consistent. This is done by making sure both solutions use the same
+// character whenever both of them don't have a blank '-' char in the
+// same position, that is they are both either a '<', '>', or '=' char.
 function solutionsAreConsitent(leftSol, rightSol) {
   let areConsistent = true;
   for(let row = 0; row < 4 && areConsistent; row++) {
     for(let col = 0; col < 4 && areConsistent; col++) {
       let leftChar = leftSol[row][col];
       let rightChar = rightSol[row][col];
+      // If neither solution has a '-' char at the position,
+      // then both solutions must use the same character.
       if(leftChar !== '-' && rightChar !== '-') {
         areConsistent = leftChar === rightChar;
       }
