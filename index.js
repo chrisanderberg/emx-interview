@@ -72,7 +72,7 @@ function solvePuzzle(d) {
         }
       }
     }
-    return ` ABCD\n${solution[0]}\nB${solution[1]}\nC${solution[2]}\nD${solution[3]}`;
+    return ` ABCD\nA${solution[0]}\nB${solution[1]}\nC${solution[2]}\nD${solution[3]}`;
   } else {
     return "couldn't parse puzzle";
   }
