@@ -1,6 +1,6 @@
 # emx-interview
 
-My solution for the EMX interview process, cloned from a [barebones Node.js app](https://github.com/heroku/node-js-getting-started) using [Express 4](http://expressjs.com/).
+My solution for the EMX interview process, cloned from [Heroku's barebones Node.js app](https://github.com/heroku/node-js-getting-started) using [Express 4](http://expressjs.com/). It was stripped of all unnecessary logic and modified for this mini-project's purpose. All the interesting logic can be found in [index.js](https://github.com/chrisanderberg/emx-interview/blob/main/index.js).
 
 ## Running Locally
 

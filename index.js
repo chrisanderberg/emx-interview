@@ -82,7 +82,7 @@ function solvePuzzle(d) {
   }
 }
 
-// This function must take a string of length four with exactly one 'A', 'B', 'C', and 'D' each.
+// This function must take a string of length of 4 with exactly one 'A', 'B', 'C', and 'D' each.
 // It uses the ordered letters to generate the corresponding solution to the puzzle.
 function solutionFromOrdering(abcdStr) {
   // Setup the order array.
@@ -100,7 +100,7 @@ function solutionFromOrdering(abcdStr) {
     ['', '', '', '']];
   for(let row = 0; row < 4; row++) {
     for(let col = 0; col < 4; col++) {
-      // Use the ordering to determint the correct character to use.
+      // Use the ordering to determine the correct character to use.
       let char = '';
       if(order[row] < order[col]) {
         char = '<';
