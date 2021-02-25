@@ -62,10 +62,11 @@ function solvePuzzle(d) {
       "BACD", "BADC", "BCAD", "BCDA", "BDAC", "BDCA",
       "CABD", "CADB", "CBAD", "CBDA", "CDAB", "CDBA",
       "DABC", "DACB", "DBAC", "DBCA", "DCAB", "DCBA"];
+    let s = constraints;
+    return ` ABCD\nA${s[0].join('')}\nB${s[1].join('')}\nC${s[2].join('')}\nD${s[3].join('')}`;
     
     for(let i = 0; i < possibleOrderings.length; i++) {
-      let possibleOrdering = possibleOrderings[i];
-      let possibleSolution = solutionFromOrdering(possibleOrdering);
+      let possibleSolution = solutionFromOrdering(possibleOrderings[i]);
       if(solutionsAreConsitent(constraints, possibleSolution)) {
         let s = possibleSolution;
         return ` ABCD\nA${s[0].join('')}\nB${s[1].join('')}\nC${s[2].join('')}\nD${s[3].join('')}`;
