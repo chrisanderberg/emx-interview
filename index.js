@@ -53,9 +53,11 @@ function generateAnswer(req) {
 }
 
 function solvePuzzle(d) {
-  let puzzleString = d.match(/\sABCD\sA\S{4}\sB\S{4}\sC\S{4}\sD\S{4}/);
-  if(puzzleString) {
-    puzzleString = puzzleString[0]
+  let puzzleMatch = d.match(/\sABCD\sA([<>=-]{4})\sB([<>=-]{4})\sC([<>=-]{4})\sD([<>=-]{4})/);
+  if(puzzleMatch) {
+    let [puzzleString, compareA, compareB, compareC, compareD] = puzzleMatch;
+    return ` ABCD\n${compareA}\nB${compareB}\nC${compareC}\nD${compareD}`;
+  } else {
+    return "couldn't parse puzzle";
   }
-  return puzzleString || " ABCD\nA=---\nB-=--\nC--=-\nD---=";
 }
