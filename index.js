@@ -30,7 +30,7 @@ express()
       res.send("Error " + err);
     }
   })
-  .get('/test', (req, res) => "test")
+  .get('/test', (req, res) => res.send("test"))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 function showTimes() {
