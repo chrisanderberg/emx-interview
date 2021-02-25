@@ -56,6 +56,7 @@ function solvePuzzle(d) {
   let puzzleMatch = d.match(/\sABCD\sA([<>=-]{4})\sB([<>=-]{4})\sC([<>=-]{4})\sD([<>=-]{4})/);
   if(puzzleMatch) {
     let [puzzleString, ...solution] = puzzleMatch;
+    solution = solution.map(str => str.split(''));
     let isSolved = false;
     while(!isSolved) {
       isSolved = true; // assume it's solved until a blank is found
@@ -72,7 +73,7 @@ function solvePuzzle(d) {
         }
       }
     }
-    return ` ABCD\nA${solution[0]}\nB${solution[1]}\nC${solution[2]}\nD${solution[3]}`;
+    return ` ABCD\nA${solution[0].join()}\nB${solution[1].join()}\nC${solution[2].join()}\nD${solution[3].join()}`;
   } else {
     return "couldn't parse puzzle";
   }
