@@ -4,10 +4,18 @@ const PORT = process.env.PORT || 5000
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
-  .get('/', (req, res) => res.send(generateAnswer(req, res)))
+  .get('/', (req, res) => res.send(generateAnswer(req)))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
-function generateAnswer(req, res) {
+function generateAnswer(req) {
   let {q, d} = req.query;
-  return `Question is :${q}\nDescription is "${d}`;
+  response = "OK";
+  if(q) {
+    switch(q) {
+      default:
+        response = "OK";
+        break;
+    }
+  }
+  return response;
 }
