@@ -56,7 +56,7 @@ function solvePuzzle(d) {
   let puzzleMatch = d.match(/\sABCD\sA([<>=-]{4})\sB([<>=-]{4})\sC([<>=-]{4})\sD([<>=-]{4})/);
   if(puzzleMatch) {
     let [puzzleString, ...constraints] = puzzleMatch;
-    constraints = solution.map(str => str.split(''));
+    constraints = constraints.map(str => str.split(''));
     let possibleOrderings = [
       "ABCD", "ABDC", "ACBD", "ACDB", "ADBC", "ADCB",
       "BACD", "BADC", "BCAD", "BCDA", "BDAC", "BDCA",
