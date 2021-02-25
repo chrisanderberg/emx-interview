@@ -13,10 +13,10 @@ function generateAnswer(req) {
   if(q) {
     switch(q) {
       case "Resume":
-        response = "https://mysterious-basin-39601.herokuapp.com/"
+        response = "https://mysterious-basin-39601.herokuapp.com/Resume-and-Cover-Letter.zip"
         break;
       case "Puzzle":
-        response = ""
+        response = "ABCD A=___ B_=__ C__=_ D___=";
         break;
       case "Position":
         response = "Software Engineer - Mid Level on the Exchange team"
