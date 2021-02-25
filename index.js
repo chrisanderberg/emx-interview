@@ -55,26 +55,69 @@ function generateAnswer(req) {
 function solvePuzzle(d) {
   let puzzleMatch = d.match(/\sABCD\sA([<>=-]{4})\sB([<>=-]{4})\sC([<>=-]{4})\sD([<>=-]{4})/);
   if(puzzleMatch) {
-    let [puzzleString, ...solution] = puzzleMatch;
-    solution = solution.map(str => str.split(''));
-    let isSolved = false;
-    while(!isSolved) {
-      isSolved = true; // assume it's solved until a blank is found
-      for(let row = 0; row < 4; row++) { // each row
-        for(let col = 0; col < 4; col++) { // each col
-          if(solution[row][col] === '-') { // if it's blank
-            if(solution[col][row] !== '-') { // if the correlated element isn't blank
-              // set the element to the opposite of it's correlated element
-              solution[row][col] = solution[col][row] === '>' ? '<' : '>';
-            } else {
-              //isSolved = false;
-            }
-          }
-        }
+    let [puzzleString, ...constraints] = puzzleMatch;
+    constraints = solution.map(str => str.split(''));
+    let possibleOrderings = [
+      "ABCD", "ABDC", "ACBD", "ACDB", "ADBC", "ADCB",
+      "BACD", "BADC", "BCAD", "BCDA", "BDAC", "BDCA",
+      "CABD", "CADB", "CBAD", "CBDA", "CDAB", "CDBA",
+      "DABC", "DACB", "DBAC", "DBCA", "DCAB", "DCBA"];
+    
+    for(let i = 0; i < possibleOrderings.length; i++) {
+      let possibleOrdering = possibleOrderings[i];
+      let possibleSolution = solutionFromOrdering(possibleOrdering);
+      if(solutionsAreConsitent(constraints, possibleSolution)) {
+        let s = possibleSolution;
+        return ` ABCD\nA${s[0].join('')}\nB${s[1].join('')}\nC${s[2].join('')}\nD${s[3].join('')}`;
       }
     }
-    return ` ABCD\nA${solution[0].join('')}\nB${solution[1].join('')}\nC${solution[2].join('')}\nD${solution[3].join('')}`;
   } else {
     return "couldn't parse puzzle";
   }
+}
+
+// this function must take a string of length four with exactly one 'A', 'B', 'C', and 'D' each.
+function solutionFromOrdering(abcdStr) {
+  // setup the order array
+  let indices = {A: 0, B: 1, C: 2, D: 3};
+  let order = [undefined, undefined, undefined, undefined];
+  for(let i = 0; i < 4; i++) {
+    order[indices[abcdStr[i]]] = i;
+  }
+
+  // build the solution
+  let solution = [
+    ['', '', '', ''],
+    ['', '', '', ''],
+    ['', '', '', ''],
+    ['', '', '', '']];
+  for(let row = 0; row < 4; row++) {
+    for(let col = 0; col < 4; col++) {
+      let char = '';
+      if(order[row] < order[col]) {
+        char = '<';
+      } else if(order[row] > order[col]) {
+        char = '>';
+      } else {
+        char = '=';
+      }
+      solution[row][col] = char;
+    }
+  }
+
+  return solution;
+}
+
+function solutionsAreConsitent(leftSol, rightSol) {
+  let areConsistent = true;
+  for(let row = 0; row < 4 && areConsistent; row++) {
+    for(let col = 0; col < 4 && areConsistent; col++) {
+      let leftChar = leftSol[row][col];
+      let rightChar = rightSol[row][col];
+      if(leftChar !== '-' && rightChar !== '-') {
+        areConsistent = leftChar === rightChar;
+      }
+    }
+  }
+  return areConsistent;
 }
