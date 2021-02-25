@@ -1,16 +1,14 @@
-# node-js-getting-started
+# emx-interview
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
-
-This application supports the [Getting Started on Heroku with Node.js](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
+My solution for the EMX interview process, cloned from a [barebones Node.js app](https://github.com/heroku/node-js-getting-started) using [Express 4](http://expressjs.com/).
 
 ## Running Locally
 
 Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cli.heroku.com/) installed.
 
 ```sh
-$ git clone https://github.com/heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
+$ git clone https://github.com/chrisanderberg/emx-interview.git # or clone your own fork
+$ cd emx-interview
 $ npm install
 $ npm start
 ```

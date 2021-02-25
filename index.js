@@ -37,7 +37,7 @@ function generateAnswer(req) {
         response = "Christopher Anderberg";
         break;
       case "Source":
-        response = "https://github.com";
+        response = "https://github.com/chrisanderberg/emx-interview";
         break;
       case "Email Address":
         response = "chris.anderberg@protonmail.com";
