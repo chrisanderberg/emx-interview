@@ -86,10 +86,10 @@ function solvePuzzle(d) {
 // It uses the ordered letters to generate the corresponding solution to the puzzle.
 function solutionFromOrdering(abcdStr) {
   // Setup the order array.
-  let indices = {A: 0, B: 1, C: 2, D: 3};
+  let letterAsNumber = {A: 0, B: 1, C: 2, D: 3};
   let sequencePosition = [undefined, undefined, undefined, undefined];
   for(let i = 0; i < 4; i++) {
-    sequencePosition[indices[abcdStr[i]]] = i;
+    sequencePosition[letterAsNumber[abcdStr[i]]] = i;
   }
 
   // Build the solution.
