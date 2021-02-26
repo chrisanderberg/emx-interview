@@ -45,9 +45,10 @@ function generateAnswer(req) {
       response = "yes";
       break;
     case "Ping":
-    default:
       response = "OK";
       break;
+    default:
+      response = '';
   }
   return response;
 }
@@ -135,5 +136,6 @@ function isPuzzleSolution(puzzle, possibleSolution) {
       }
     }
   }
+
   return isSolution;
 }
