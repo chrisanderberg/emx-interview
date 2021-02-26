@@ -44,7 +44,7 @@ function generateAnswer(req) {
     case "Status":
       response = "yes";
       break;
-    case "ping":
+    case "Ping":
     default:
       response = "OK";
       break;
@@ -60,7 +60,7 @@ function solvePuzzle(d) {
     let [puzzleString, ...constraints] = puzzleMatch;
     constraints = constraints.map(str => str.split(''));
 
-    // There are 24 possible ways to order four letters.
+    // There are 24 possible ways to order (permutations) four letters.
     let possibleOrderings = [
       "ABCD", "ABDC", "ACBD", "ACDB", "ADBC", "ADCB",
       "BACD", "BADC", "BCAD", "BCDA", "BDAC", "BDCA",
@@ -87,9 +87,9 @@ function solvePuzzle(d) {
 function solutionFromOrdering(abcdStr) {
   // Setup the order array.
   let indices = {A: 0, B: 1, C: 2, D: 3};
-  let order = [undefined, undefined, undefined, undefined];
+  let sequencePosition = [undefined, undefined, undefined, undefined];
   for(let i = 0; i < 4; i++) {
-    order[indices[abcdStr[i]]] = i;
+    sequencePosition[indices[abcdStr[i]]] = i;
   }
 
   // Build the solution.
@@ -102,9 +102,9 @@ function solutionFromOrdering(abcdStr) {
     for(let col = 0; col < 4; col++) {
       // Use the ordering to determine the correct character to use.
       let char = '';
-      if(order[row] < order[col]) {
+      if(sequencePosition[row] < sequencePosition[col]) {
         char = '<';
-      } else if(order[row] > order[col]) {
+      } else if(sequencePosition[row] > sequencePosition[col]) {
         char = '>';
       } else {
         char = '=';
@@ -120,12 +120,13 @@ function solutionFromOrdering(abcdStr) {
 // consistent. This is done by making sure both solutions use the same
 // character whenever both of them don't have a blank '-' char in the
 // same position, that is they are both either a '<', '>', or '=' char.
-function solutionsAreConsitent(leftSol, rightSol) {
+function solutionsAreConsitent(leftSolution, rightSolution) {
   let areConsistent = true;
   for(let row = 0; row < 4 && areConsistent; row++) {
     for(let col = 0; col < 4 && areConsistent; col++) {
-      let leftChar = leftSol[row][col];
-      let rightChar = rightSol[row][col];
+      let leftChar = leftSolution[row][col];
+      let rightChar = rightSolution[row][col];
+
       // If neither solution has a '-' char at the position,
       // then both solutions must use the same character.
       if(leftChar !== '-' && rightChar !== '-') {
