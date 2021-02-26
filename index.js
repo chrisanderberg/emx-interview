@@ -57,8 +57,8 @@ function solvePuzzle(d) {
   let puzzleMatch = d.match(/\sABCD\sA([<>=-]{4})\sB([<>=-]{4})\sC([<>=-]{4})\sD([<>=-]{4})/);
   if(puzzleMatch) {
     // Build the puzzle constraints from the regex match.
-    let [puzzleString, ...constraints] = puzzleMatch;
-    constraints = constraints.map(str => str.split(''));
+    let [puzzleString, ...puzzle] = puzzleMatch;
+    puzzle = puzzle.map(str => str.split(''));
 
     // There are 24 possible ways to order (permutations) four letters.
     let possibleOrderings = [
@@ -71,8 +71,8 @@ function solvePuzzle(d) {
     for(let i = 0; i < possibleOrderings.length; i++) {
       let possibleSolution = solutionFromOrdering(possibleOrderings[i]);
 
-      // A solution that is consistent with the puzzle constraints is correct.
-      if(solutionsAreConsitent(constraints, possibleSolution)) {
+      // Check if it's the right solution.
+      if(isPuzzleSolution(puzzle, possibleSolution)) {
         let s = possibleSolution;
         return ` ABCD\nA${s[0].join('')}\nB${s[1].join('')}\nC${s[2].join('')}\nD${s[3].join('')}`;
       }
@@ -116,23 +116,24 @@ function solutionFromOrdering(abcdStr) {
   return solution;
 }
 
-// Check if two potentially partial solutions (with the blank char) are
-// consistent. This is done by making sure both solutions use the same
-// character whenever both of them don't have a blank '-' char in the
-// same position, that is they are both either a '<', '>', or '=' char.
-function solutionsAreConsitent(leftSolution, rightSolution) {
-  let areConsistent = true;
-  for(let row = 0; row < 4 && areConsistent; row++) {
-    for(let col = 0; col < 4 && areConsistent; col++) {
-      let leftChar = leftSolution[row][col];
-      let rightChar = rightSolution[row][col];
+// Check if one of the 24 possible valid solutions is the solution
+// to a puzzle by checking if characters in the puzzle that aren't
+// a blank character, that is anything that's a '<', '>', or '=',
+// is the same as the character in the possible solution.
+function isPuzzleSolution(puzzle, possibleSolution) {
+  // Assume it's the solution until an inconsistency is found.
+  let isSolution = true;
+  for(let row = 0; row < 4 && isSolution; row++) {
+    for(let col = 0; col < 4 && isSolution; col++) {
+      let puzzleChar = puzzle[row][col];
+      let solutionChar = possibleSolution[row][col];
 
-      // If neither solution has a '-' char at the position,
-      // then both solutions must use the same character.
-      if(leftChar !== '-' && rightChar !== '-') {
-        areConsistent = leftChar === rightChar;
+      // If the puzzle character isn't a blank '-',
+      // then check the solution character is identical.
+      if(puzzleChar !== '-') {
+        isSolution = puzzleChar === solutionChar;
       }
     }
   }
-  return areConsistent;
+  return isSolution;
 }
